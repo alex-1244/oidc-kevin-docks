@@ -33,7 +33,8 @@
                         <ul class="list-group">
                             @foreach (var scope in Model.IdentityScopes)
                             {
-                                <partial name="_ScopeListItem" model="@scope" />
+                                @*<partial name="_ScopeListItem" model="@scope" />*@
+								@Html.Partial("_ScopeListItem", scope)
                             }
                         </ul>
                     </div>
@@ -49,7 +50,8 @@
                         <ul class="list-group">
                             @foreach (var scope in Model.ResourceScopes)
                             {
-                                <partial name="_ScopeListItem" model="scope" />
+                                @*<partial name="_ScopeListItem" model="scope" />*@
+	                            @Html.Partial("_ScopeListItem", scope)
                             }
                         </ul>
                     </div>
