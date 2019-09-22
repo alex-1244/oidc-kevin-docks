@@ -48,6 +48,7 @@ namespace ImageGallery.Client
 					opt.SaveTokens = true;
 					opt.ClientSecret = "secret";
 					//opt.CallbackPath = "https://localhost:44344";
+					//opt.SignedOutCallbackPath = new PathString();
 	            });
         }
 

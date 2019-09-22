@@ -28,7 +28,7 @@ namespace ImageGallery.Client.Controllers
 
         public async Task<IActionResult> Index()
         {
-	        await WriteOutIdentityInformation();
+	        await this.WriteOutIdentityInformation();
             
             var httpClient = await _imageGalleryHttpClient.GetClient(); 
 
@@ -167,6 +167,12 @@ namespace ImageGallery.Client.Controllers
 
             throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
         }
+
+        public async Task Logout()
+        {
+	        await HttpContext.SignOutAsync("Cookies");
+	        await HttpContext.SignOutAsync("oidc");
+		}
 
         private async Task WriteOutIdentityInformation()
         {

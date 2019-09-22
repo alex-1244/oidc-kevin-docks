@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using IdentityServer4;
 using IdentityServer4.Models;
 using IdentityServer4.Test;
@@ -61,6 +58,10 @@ namespace Marvin.IDP
 					RedirectUris = new List<string>()
 					{
 						"https://localhost:44344/signin-oidc"
+					},
+					PostLogoutRedirectUris = new List<string>()
+					{
+						"https://localhost:44344/signout-callback-oidc"
 					},
 					AllowedScopes =
 					{
