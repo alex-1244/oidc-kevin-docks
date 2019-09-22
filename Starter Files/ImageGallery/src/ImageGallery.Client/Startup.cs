@@ -47,6 +47,7 @@ namespace ImageGallery.Client
 					opt.Scope.Add("profile");
 					opt.SaveTokens = true;
 					opt.ClientSecret = "secret";
+					opt.GetClaimsFromUserInfoEndpoint = true;
 					//opt.CallbackPath = "https://localhost:44344";
 					//opt.SignedOutCallbackPath = new PathString();
 	            });
