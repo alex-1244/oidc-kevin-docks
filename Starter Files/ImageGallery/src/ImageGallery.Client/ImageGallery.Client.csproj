@@ -9,8 +9,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="IdentityModel" Version="3.10.10" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.6" />
-    <PackageReference Include="IdentityModel" Version="4.0.0" />   
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />   
   </ItemGroup>
 
   <ItemGroup>

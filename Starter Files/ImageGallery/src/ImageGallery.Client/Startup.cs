@@ -1,5 +1,7 @@
-﻿using System.Security.Authentication.ExtendedProtection;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Authentication.ExtendedProtection;
 using ImageGallery.Client.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -16,6 +18,7 @@ namespace ImageGallery.Client
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+			JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
         }
  
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -45,12 +48,18 @@ namespace ImageGallery.Client
 		            opt.ResponseType = "code id_token";
 					opt.Scope.Add("openid");
 					opt.Scope.Add("profile");
+					opt.Scope.Add("address");
 					opt.SaveTokens = true;
 					opt.ClientSecret = "secret";
 					opt.GetClaimsFromUserInfoEndpoint = true;
 					//opt.CallbackPath = "https://localhost:44344";
 					//opt.SignedOutCallbackPath = new PathString();
-	            });
+
+					opt.ClaimActions.Remove("amr"); // now this claim WILL BE present in claims identity
+					opt.ClaimActions.DeleteClaim("sid"); //now this claim WON'T BE present in claims identity (in Cookie)
+					opt.ClaimActions.DeleteClaim("idp");
+					opt.ClaimActions.DeleteClaim("address");
+				});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

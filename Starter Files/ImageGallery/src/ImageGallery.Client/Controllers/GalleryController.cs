@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
@@ -173,6 +174,30 @@ namespace ImageGallery.Client.Controllers
 	        await HttpContext.SignOutAsync("Cookies");
 	        await HttpContext.SignOutAsync("oidc");
 		}
+
+        public async Task<IActionResult> OrderFrame()
+        {
+	        var discoveryClient = new HttpClient();
+	        var metadata = await discoveryClient.GetDiscoveryDocumentAsync("https://localhost:44312/");
+
+
+	        var accessToken = await HttpContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
+
+	        var response = await discoveryClient.GetUserInfoAsync(new UserInfoRequest
+	        {
+		        Address = metadata.UserInfoEndpoint,
+		        Token = accessToken
+	        });
+
+	        if (response.IsError)
+	        {
+		        throw new Exception("Problem accessing the UserInfo endpoint.", response.Exception);
+	        }
+
+	        var address = response.Claims.FirstOrDefault(c => c.Type == "address")?.Value;
+
+	        return View(new OrderFrameViewModel(address));
+        }
 
         private async Task WriteOutIdentityInformation()
         {
